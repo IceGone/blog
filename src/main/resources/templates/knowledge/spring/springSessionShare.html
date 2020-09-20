@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--章节内容：起步-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragments/headerOnly :: header}">
+    <meta charset="utf-8">
+    <title>Vue.js 起步</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+</head>
+<body>
+<!-- /.container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td >tomcat_A:setsession</td>
+                            <td ><input type="text" placeholder="输入sessionName" class="sessionName_1">&nbsp;&nbsp;
+                                 <input type="text" placeholder="sessionValue" class="sessionValue_1"></td>
+                            <td ><div class="btn btn-md" id="setSession_1" onclick="setSession(this)">set_A</div>&nbsp;&nbsp;&nbsp;
+                                 <div class="btn btn-md" id="getSession_1" onclick="getSession(this)">get_B</div></td>
+                        </tr>
+                        <tr>
+                            <td >tomcat_B:getsession</td>
+                            <td ><input type="text" placeholder="输入sessionName" class="sessionName_2">&nbsp;&nbsp;
+                                 <input type="text" placeholder="sessionValue" class="sessionValue_2" disabled="disabled"></td>
+                            <td ><div class="btn btn-md" id="setSession_2" onclick="setSession(this)">set_B</div>&nbsp;&nbsp;&nbsp;
+                                 <div class="btn btn-md" id="getSession_2" onclick="getSession(this)">get_A</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footerOnly :: footer}">...</div>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    function setSession(obj){
+        //获取 对应的name，value
+        var sessionName = ".sessionName_"+$(obj).attr("id").split("_")[1];
+        var sessionValue = ".sessionValue_"+$(obj).attr("id").split("_")[1];
+        var jsonData = {
+            sessionName:$(sessionName).val(),
+            sessionValue:$(sessionValue).val()
+        }
+        $.ajax({
+            url: "/knowledge/spring/setSession",
+            data:{jsonData:JSON.stringify(jsonData)},
+            success: function(res){
+                toastr.success(res.message);
+            },
+            error : function() {
+                toastr.error("保存入session失败！");
+            }
+        });
+    }
+
+    function getSession(obj){
+        //获取 对应的name，value
+        var sessionName = ".sessionName_"+$(obj).attr("id").split("_")[1];
+        toastr.info(sessionName)
+        var sessionValue = ".sessionValue_"+$(obj).attr("id").split("_")[1];
+        var jsonData = {
+            sessionName:$(sessionName).val(),
+        }
+        $.ajax({
+            url: "/knowledge/spring/getSession",
+            data:{jsonData:JSON.stringify(jsonData)},
+            success: function(res){
+                //赋值 sessionValue
+                $(sessionValue).val(res.data)
+                toastr.success(res.message);
+            },
+            error : function() {
+                toastr.error("获取sessionValue失败！");
+            }
+        });
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragments/header :: header}">
+</head>
+<body>
+<!-- /.container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <!--<thead>
+                        <tr><td style="font-weight: bold">spring</td></tr>
+                    </thead>-->
+                    <tbody>
+                    <tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_1" onclick="show(this)">session共享(两tomcat)</td>
+                    </tr>
+                    <!--<tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_2" onclick="show(this)">模板语法</td>
+                    </tr>
+                    <tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_3" onclick="show(this)">条件语句</td>
+                    </tr>
+                    <tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_4" onclick="show(this)">循环语句</td>
+                    </tr>
+                    <tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px"class="show_5" onclick="show(this)">计算属性</td>
+                    </tr>
+                    <tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_6" onclick="show(this)">监听属性</td>
+                    </tr>
+                    <tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_7" onclick="show(this)">样式绑定</td>
+                    </tr>
+                    <tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_8" onclick="show(this)">事件处理器</td>
+                    </tr>
+                    <tr >
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_9" onclick="show(this)">表单</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_10" onclick="show(this)">组件</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_11" onclick="show(this)">自定义指令</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_12" onclick="show(this)">路由</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_13" onclick="show(this)">过度&动画</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_14" onclick="show(this)">混入</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_15" onclick="show(this)">Ajax(axios)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_16" onclick="show(this)">Ajax(vue-resource)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_17" onclick="show(this)">响应接口</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px;padding-bottom: 4px" class="show_18" onclick="show(this)">实例</td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-md-10">
+            <div class="show show_1_1" style="display: block">
+                <div th:replace="~{knowledge/spring/springSessionShare}">...</div>
+            </div>
+            <!--<div class="show show_2_2" style="display: none">
+                <div th:replace="~{knowledge/spring/02_templateSyntax}">...</div>
+            </div>
+            <div class="show show_3_3" style="display: none">
+                <div th:replace="~{knowledge/spring/03_conditionalStatements}">...</div>
+            </div>
+            <div class="show show_4_4" style="display: none">
+                <div th:replace="~{knowledge/spring/04_cycle}">...</div>
+            </div>
+            <div class="show show_5_5" style="display: none">
+                <div th:replace="~{knowledge/spring/05_calculateAttribute}">...</div>
+            </div>
+            <div class="show show_6_6" style="display: none">
+                <div th:replace="~{knowledge/spring/06_listenerAttr}">...</div>
+            </div>
+            <div class="show show_7_7" style="display: none">
+                <div th:replace="~{knowledge/spring/07_styleBind}">...</div>
+            </div>
+            <div class="show show_8_8" style="display: none">
+                <div th:replace="~{knowledge/spring/08_eventDealer}">...</div>
+            </div>
+            <div class="show show_9_9" style="display: none">
+                <div th:replace="~{knowledge/spring/09_form}">...</div>
+            </div>
+            <div class="show show_10_10" style="display: none">
+                <div th:replace="~{knowledge/spring/10_component}">...</div>
+            </div>
+            <div class="show show_11_11" style="display: none">
+                <div th:replace="~{knowledge/spring/11_route}">...</div>
+            </div>
+            <div class="show show_12_12" style="display: none">
+                <div th:replace="~{knowledge/spring/12_selfDefideOrder}">...</div>
+            </div>
+            <div class="show show_13_13" style="display: none">
+                <div th:replace="~{knowledge/spring/13_annimate}">...</div>
+            </div>
+            <div class="show show_14_14" style="display: none">
+                <div th:replace="~{knowledge/spring/14_mixIn}">...</div>
+            </div>
+            <div class="show show_15_15" style="display: none">
+                <div th:replace="~{knowledge/spring/15_ajax_axios}">...</div>
+            </div>
+            <div class="show show_16_16" style="display: none">
+                <div th:replace="~{knowledge/spring/16_ajax_vus_resource}">...</div>
+            </div>
+            <div class="show show_17_17" style="display: none">
+                <div th:replace="~{knowledge/spring/17_responsiveInterface}">...</div>
+            </div>
+            <div class="show show_18_18" style="display: none">
+                <div th:replace="~{knowledge/spring/18_instance}">...</div>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">...</div>
+
+<!-- JavaScript -->
+<script>
+    //控制页面 的展示
+    function show(obj){
+        //获取类名
+        var objClass =obj.className;
+        //截取类名 编号
+        var objClassNum =objClass.split("_")[1];
+        // 拼接 展示的页面 .类名
+        var objShowClass = "."+objClass+"_"+objClassNum;
+        //隐藏 所有展示页面
+        $(".show").hide();
+        //显示 选中展示页面
+        $(objShowClass).show();
+    }
+</script>
+</body>
+</html>

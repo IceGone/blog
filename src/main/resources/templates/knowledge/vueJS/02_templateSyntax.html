@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--章节内容：模板语法-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+</head>
+<body>
+<!-- /.container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr><td colspan="3" style="font-weight: bold">Vue.js 模板语法</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr >
+                        <td>使用 {{...}}（双大括号）的文本插值::</td>
+                        <td><div class="syntax">{{message}}</div> </td>
+                    </tr>
+                    <tr >
+                        <td>使用 v-html 指令输出 html 代码::</td>
+                        <td><div class="syntax">
+                                <div v-html="htmlMessage" ></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script type="text/javascript">
+    var vm = new Vue({
+        el : ".syntax",
+        data: {
+            message:'午休时间到',
+            htmlMessage:'<h1>午休时间到</h1>'
+        }
+    })
+</script>
+</body>
+</html>

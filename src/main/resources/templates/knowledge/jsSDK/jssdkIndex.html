@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragments/header :: header}">
+    <style>
+    </style>
+</head>
+<body>
+<!-- /.container -->
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr><td colspan="3" style="font-weight: bold;margin: auto">jssdk 效果展示</td></tr>
+                        </thead>
+                        <tbody>
+                        <tr >
+                            <td th:colspan="2" >
+                                <button type="button" class="btn btn-success btn-sm button_wh" onclick="chooseImageOne(this)" style="width: 160px;margin-left: auto"> wx.chooseImage</button><br><br>
+                                <button type="button" class="btn btn-success btn-sm button_wh" onclick="toggolePicture()" style="width: 160px;margin: auto">toggolePicture</button>
+                            </td>
+                            <td >
+                                <!--http://www.icegone.cn/images/end32.gif  请选择图片-->
+                                <img src="" class="img-responsive ImageOne" alt=""
+                                     onclick="previewImgOne(this)"
+                                     style="width:150px ;height: 100px;border-radius: 3px; margin-left: -121%;display: none" >
+                                <!--图片编码 隐藏域-->
+                                <input class="ImageOneHide d-none" value="">
+                            </td>
+                        </tr>
+                        <tr >
+                            <td th:colspan="1">
+                                <button type="button" class="btn btn-success btn-sm button_wh" onclick="updateAppMessageShareDataOne(this)" style="width: 160px;margin: auto"> 分享到朋友</button>
+                            </td>
+                            <td th:colspan="1" >
+                                <button type="button" class="btn btn-success btn-sm button_wh" onclick="updateTimelineShareDataOne(this)" style="width: 160px;margin: auto"> 分享到朋友圈</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-hover ">
+                            <tbody>
+                            <tr >
+                                <td th:colspan="1" >
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="startRecord(this)" style="margin: auto"> 录音</button>
+                                </td>
+                                <td th:colspan="1" >
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="stopRecordOne(this)" style="margin: auto"> 停止</button>
+                                </td>
+                                <td th:colspan="1" >
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="onVoiceRecordEndOne(this)" style="margin: auto">自停 </button>
+                                </td>
+                                <td th:colspan="1" >
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="playVoiceOne(this)" style="margin: auto"> 播放</button>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td th:colspan="1">
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="pauseVoiceOne(this)" style="margin: auto">暂停</button>
+                                </td>
+                                <td th:colspan="1" >
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="stopVoiceOne(this)" style="margin: auto">停止</button>
+                                </td>
+                                <td th:colspan="1" >
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="onVoicePlayEndOne(this)" style="margin: auto">播完</button>
+                                </td>
+                                <td th:colspan="1" >
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="uploadVoiceOne(this)" style="margin: auto">上传 </button>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td th:colspan="1">
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="downloadVoiceOne(this)" style="margin: auto">下载</button>
+                                </td>
+                                <td th:colspan="2">
+                                    <button type="button" class="btn btn-success btn-sm button_wh" onclick="translateVoice(this)" style="margin: auto">识音</button>
+                                </td>
+                                <!--录音 隐藏域：本地id 服务器 id  下载后的本地(貌似跟本地i为同一个)-->
+                                <input class="localIdRecordHide d-none" value="">
+                                <input class="serverIdRecordHide d-none" value="">
+                                <input class="afterUploadLocalIdRecordHide d-none" value="">
+                                <input class="translateVoiceHide d-none" value="">
+                            </tr>
+                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-hover ">
+                                <tbody>
+                                <tr >
+                                    <td th:colspan="1">
+                                        <button type="button" class="btn btn-success btn-sm button_wh" onclick="getNetworkTypeOne(this)" style="margin: auto">网络状态</button>
+                                    </td>
+                                    <!--网络状态 隐藏域-->
+                                    <input class="networkTypeHide d-none" value="">
+                                    <td th:colspan="1">
+                                        <button type="button" class="btn btn-success btn-sm button_wh" onclick="getLocationOne(this)" style="margin: auto">获取位置</button>
+                                    </td>
+                                    <td th:colspan="1">
+                                        <button type="button" class="btn btn-success btn-sm button_wh" onclick="openLocationOne(this)" style="margin: auto">打开位置</button>
+                                    </td>
+                                    <!--地理位置 隐藏域-->
+                                    <input class="LocationLatitudeHide d-none" value="">
+                                    <input class="LocationLongitudeHide d-none" value="">
+                                    <input class="LocationSpeedHide d-none" value="">
+                                    <input class="LocationAccuracyHide d-none" value="">
+                                    <input class="detailAddress d-none" value="" onchange="getDetailAddress(this)">
+                                </tr>
+                                <tr >
+                                    <td th:colspan="1">
+                                        <button type="button" class="btn btn-success btn-sm button_wh" onclick="scanQRCodeOne(this)" style="margin: auto">扫一扫吧</button>
+                                    </td>
+                                    <td th:colspan="1">
+                                        &nbsp;
+                                    </td>
+                                    <td th:colspan="1">
+                                        <button type="submit" class="btn btn-warning btn-sm button_wh" onclick="saveDate(this)" style="margin: auto">保存数据</button>
+                                    </td>
+                                    <!--扫一扫 隐藏域-->
+                                    <input class="QRCodeResultHide d-none" value="">
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footer}">...</div>
+
+<!-- JavaScript -->
+<script th:inline="javascript",type="text/javascript" >//页面加载执行
+/**获取当前路径*/
+var contextPath =/*[[@{/}]]*/;
+
+/**微信扫一扫*/
+/**调起微信扫一扫接口*/
+function scanQRCodeOne(){
+    wx.scanQRCode({
+        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+        scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+        success: function (res) {
+            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+            toastr.info(result);
+            $(".QRCodeResultHide").val(result);
+            window.location.href=res.resultStr;
+        }
+    });
+}
+
+/**地理位置*/
+var latitude ;  // 纬度，浮点数，范围为90 ~ -90
+var longitude ; // 经度，浮点数，范围为180 ~ -180。
+var speed;      // 速度，以米/每秒计
+var accuracy;   // 位置精度
+/**获取地理位置接口*/
+function getLocationOne(obj){
+    wx.getLocation({
+        type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+        success: function (res) {
+            latitude = res.latitude;
+            longitude = res.longitude;
+            speed = res.speed;
+            accuracy = res.accuracy;
+            $(".LocationLatitudeHide").val(latitude);// 纬度，浮点数，范围为90 ~ -90
+            $(".LocationLongitudeHide").val(longitude);// 经度，浮点数，范围为180 ~ -180。
+            $(".LocationSpeedHide").val(speed);   // 速度，以米/每秒计
+            $(".LocationAccuracyHide").val(accuracy);// 位置精度
+            toastr.info("latitude:"+latitude+
+                    "<br>longitude:"+longitude+
+                    "<br>speed:"+speed+
+                    "<br>accuracy:"+accuracy )
+        }
+    });
+}
+/**使用微信内置地图查看位置接口*/
+function openLocationOne(obj){
+    wx.openLocation({
+        latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+        longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+        name: '', // 位置名
+        address: '', // 地址详情说明
+        scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+        infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+    });
+}
+/**根据latitude*/
+/*function getDetailAddress(obj){
+    $.ajax({
+        url: contextPath + "knowledge/jsSDK/getDetailAddress?url=" + window.location.href,
+        data:{
+            'latitude':latitude,
+            'longitude':longitude
+        },
+        success:function (res) {
+            var detailAdressVal = res.data.detailAdress
+            $(".detailAddress").val(detailAdressVal);
+            toastr.info("详细地址为：<br>"+detailAdressVal;
+        }
+    })
+}*/
+
+
+
+/**设备信息*/
+/**获取网络状态接口*/
+var networkType;
+function getNetworkTypeOne(obj){
+    wx.getNetworkType({
+        success: function (res) {
+            networkType = res.networkType; // 返回网络类型2g，3g，4g，wifi
+            toastr.info(networkType)
+            $(".networkTypeHide").val(networkType);
+        }
+    });
+}
+
+/**音频接口*/
+/**开始录音接口*/
+var localId; //音频本地
+var serverId; //上传的服务器
+var afterUploadLocalIdRecordHide ; // 上传后返回音频的本地ID
+
+function startRecord(obj){
+    wx.startRecord();
+    toastr.info('开始录音');
+
+}
+/**停止录音接口*/
+function stopRecordOne(obj){
+    wx.stopRecord({
+        success: function (res) {
+            localId = res.localId;
+            toastr.info('停止录音');
+            $(".localIdRecordHide").val(localId);
+        }
+    });
+}
+
+/**监听录音自动停止接口*/
+function onVoiceRecordEndOne(obj){
+    wx.onVoiceRecordEnd({
+// 录音时间超过一分钟没有停止的时候会执行 complete 回调
+        complete: function (res) {
+            localId = res.localId;
+            toastr.info('录音时间超过一分钟');
+            $(".localIdRecordHide").val(localId);
+        }
+    });
+}
+
+/**播放语音接口*/
+function playVoiceOne(obj){
+    wx.playVoice({
+        localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+    });
+    toastr.info('播放语音');
+}
+/**暂停播放接口*/
+function pauseVoiceOne(obj){
+    wx.pauseVoice({
+        localId: localId // 需要暂停的音频的本地ID，由stopRecord接口获得
+    });
+    toastr.info('暂停播放');
+}
+/**停止播放接口*/
+function stopVoiceOne(obj){
+    wx.stopVoice({
+        localId: localId // 需要停止的音频的本地ID，由stopRecord接口获得
+    });
+    toastr.info('暂停播放');
+}
+/**监听语音播放完毕接口*/
+function onVoicePlayEndOne(obj){
+    wx.onVoicePlayEnd({
+        success: function (res) {
+            localId = res.localId; // 返回音频的本地ID
+            $(".localIdRecordHide").val(localId);
+        }
+    });
+}
+/**上传语音接口*/
+function uploadVoiceOne(obj){
+    wx.uploadVoice({
+        localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+        isShowProgressTips: 1, // 默认为1，显示进度提示
+        success: function (res) {
+            serverId = res.serverId; // 返回音频的服务器端ID
+            toastr.info('上传语音');
+            $(".serverIdRecordHide").val(serverId);
+        }
+    });
+}
+/**下载语音接口*/
+function downloadVoiceOne(){
+    wx.downloadVoice({
+        serverId: serverId, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+        isShowProgressTips: 1, // 默认为1，显示进度提示
+        success: function (res) {
+            afterUploadLocalIdRecordHide = res.localId; // 返回音频的本地ID
+            $('.afterUploadLocalIdRecordHide').val(afterUploadLocalIdRecordHide);
+            if($('.afterUploadLocalIdRecordHide').val()!=""){
+                toastr.info("下载成功");
+            }
+        }
+    });
+}
+
+/**智能接口*/
+/**识别音频并返回识别结果接口*/
+function translateVoice(obj){
+    wx.translateVoice({
+        localId: localId, // 需要识别的音频的本地Id，由录音相关接口获得
+        isShowProgressTips: 1, // 默认为1，显示进度提示
+        success: function (res) {
+            toastr.info("识别结果如下:<br>"+res.translateResult); // 语音识别的结果
+            $(".translateVoiceHide").val(res.translateResult);
+        }
+    });
+}
+
+
+/**自定义“分享给朋友”及“分享到QQ”按钮的分享内容（1.4.0）*/
+function updateAppMessageShareDataOne(){
+    wx.ready(function(){
+        wx.updateAppMessageShareData({
+            title: 'updateAppMessageShareData练习', // 分享标题
+            desc: '初次分享 好激动', // 分享描述
+            link: "http://www.icegone.cn/knowledge/jsSDK/getJsSignature?url=" + window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://182.254.186.173:8888/images/end32.gif', // 分享图标
+            success: function () {
+                // 设置成功
+                alert("分享成功")
+            }
+        })
+    })
+}
+
+/**自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容（1.4.0）*/
+function updateTimelineShareDataOne(obj){
+    wx.updateTimelineShareData({
+        title: 'updateTimelineShareData练习', // 分享标题
+        link: "http://www.icegone.cn/jsSDK/getJsSignature?url=" + window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://182.254.186.173:8888/images/end32.gif', // 分享图标
+        success: function () {
+            // 设置成功
+            alert("分享成功")
+        }
+    })
+}
+
+/**调用拍照、选择图片接口*/
+function chooseImageOne(obj) {
+    wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+            localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            $(".ImageOne").attr("src", localIds);
+            $(".ImageOne").show();
+            wx.uploadImage({
+                localId: res.localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (res) {
+                    var serverId = res.serverId; // 返回图片的服务器端ID
+                    $(".ImageOneHide").val(serverId);
+                    /* $(".ImageOneHide").show(); */
+                    //隐藏拍照span标签
+                    /* $("#getImg0").hide()
+                     $("#getImg00").hide()*/
+                }
+            });
+        }
+    });
+}
+
+/**调用预览图片接口*/
+function previewImgOne(obj) {
+    var thisimg = $(obj).attr('src');
+    var imglist = $('.ImageOne');
+    var srcs = new Array();
+    for (var i = 0; i < imglist.length; i++) {
+        srcs.push(imglist.eq(i).attr('src'));
+    }
+    /*** 微信预览图片*/
+    wx.previewImage({
+        current: thisimg, // 当前显示图片的http链接
+        urls: srcs // 需要预览的图片http链接列表
+    });
+}
+/**隐藏、显示图片*/
+function toggolePicture() {
+    $(".ImageOne").toggle();
+}
+
+
+$(function(){
+    /**简单判断是否为手机，是才调用jssdk相关信息*/
+    /**手机*/
+    if(screen.width<420){
+        /**获取微信签名*/
+        $.ajax({
+            url: contextPath + "knowledge/jsSDK/getJsSignature?url=" + window.location.href,
+            success: function (resp) {
+                var data = resp.data;
+                wxConfig(data.appId, data.timestamp, data.noncestr, data.signature);
+            }
+        });
+        /**电脑：给出提示*/
+    }else {
+        toastr.warning("请在手机上打开");
+    }
+
+})
+/**注入微信配置*/
+function wxConfig(_appId, _timestamp, _nonceStr, _signature) {
+    wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: _appId, // 必填，公众号的唯一标识
+        timestamp: _timestamp, // 必填，生成签名的时间戳
+        nonceStr: _nonceStr, // 必填，生成签名的随机串
+        signature: _signature,// 必填，签名，见附录1
+        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','updateTimelineShareData',
+            'updateAppMessageShareData','onMenuShareQZone','startRecord', 'stopRecord','onVoiceRecordEnd','playVoice','pauseVoice',
+            'stopVoice','onVoicePlayEnd','uploadVoice','downloadVoice', 'chooseImage','previewImage','uploadImage','downloadImage',
+            'translateVoice','getNetworkType','openLocation','getLocation', 'hideOptionMenu','showOptionMenu','hideMenuItems',
+            'showMenuItems','hideAllNonBaseMenuItem','showAllNonBaseMenuItem', 'closeWindow','scanQRCode','chooseWXPay',
+            'openProductSpecificView','addCard','chooseCard','openCard']
+        // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+   /* wx.ready(function(){
+        wx.updateAppMessageShareData({
+            title: 'updateAppMessageShareData练习', // 分享标题
+            desc: '初次分享 好激动', // 分享描述
+            link: "http://www.icegone.cn/knowledge/jsSDK/getJsSignature?url=" + window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://182.254.186.173/images/end32.gif', // 分享图标
+            success: function () {
+                // 设置成功
+                alert("分享成功")
+            }
+        })
+    })*/
+}
+
+/**保存数据*/
+function saveDate(obj){
+    var saveDateUrl= contextPath+"knowledge/jsSDK/svaeDate?url=" + window.location.href;
+    alert(saveDateUrl);
+    var info = {'QRCodeResultHide':$(".QRCodeResultHide").val(),
+        'LocationLatitudeHide':$(".LocationLatitudeHide").val(),
+        'LocationLongitudeHide':$(".LocationLongitudeHide").val(),
+        'LocationSpeedHide':$(".LocationSpeedHide").val(),
+        'LocationAccuracyHide':$(".LocationAccuracyHide").val(),
+        'localIdRecordHide':$(".localIdRecordHide").val(),
+        'serverIdRecordHide':$(".serverIdRecordHide").val(),
+        'afterUploadLocalIdRecordHide':$('.afterUploadLocalIdRecordHide').val(),
+        'translateVoiceHide':$(".translateVoiceHide").val(),
+        'ImageOneHide':$(".ImageOneHide").val(),
+        'networkTypeHide':$(".networkTypeHide").val()
+    }
+    $.ajax({
+        url: saveDateUrl,
+        data: {jsonData:JSON.stringify(info)},
+        success: function(){
+            toastr.success('保存成功');
+        },
+        error : function() {
+            toastr.error("保存失败!");
+        }
+    });
+}
+
+/**所有隐藏域的值*/
+/**
+
+ $(".QRCodeResultHide").val(); //扫一扫返回的结果
+ $(".LocationLatitudeHide").val();// 纬度，浮点数，范围为90 ~ -90
+ $(".LocationLongitudeHide").val();// 经度，浮点数，范围为180 ~ -180。
+ $(".LocationSpeedHide").val();   // 速度，以米/每秒计
+ $(".LocationAccuracyHide").val();// 位置精度
+ $(".localIdRecordHide").val();
+ $(".serverIdRecordHide").val();
+ $('.afterUploadLocalIdRecordHide').val();
+ $(".translateVoiceHide").val();
+ $(".ImageOneHide").val();
+ $(".networkTypeHide").val();
+
+ * */
+
+</script>
+</body>
+</html>

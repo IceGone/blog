@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<!--章节内容：条件语句-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragments/headerOnly :: header}">
+    <meta charset="utf-8">
+    <title>select2</title>
+    <style>
+        #hideChildPage{
+            display: none;
+        }
+        .select2-results__option{
+            text-align: center;
+        }
+        /**设置select 内容居中*/
+        #selectTest {
+            width: 100%;
+            text-align-last: center;
+            padding: 0 2%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr >
+                        <td>
+                            <div>
+                                <span>select2异步分页加载</span>
+                            </div>
+                        </td>
+                        <td id="scrollLoad">
+                            <div  id="parrent" >
+                                <select class="" name="state" id="selectTest" multiple="multiple" style="width:100%"></select>
+                                <div id="hideChildPage " class="d-none">
+                                    <ul class="pagination" id="childPage">
+                                        <!-- 总记录数 -->
+                                        <li class="tbpage-total-elements disabled">共<span class="totalNum">0</span>条</li>
+
+                                        <!-- 页面大小 -->
+                                        <select class="custom-select tbpage-size" pageindex="1" style="text-align: center" onchange="pageSizeChange(this)">
+                                            <option value="5">5</option>
+                                            <option value="10" selected="selected">10</option>
+                                            <option value="20">20</option>
+                                            <option value="40">40</option>
+                                        </select>
+
+                                        <!-- 上一页 -->
+                                        <li class="page-item">
+                                            <a href="javascript:prePage(this);" class="page-link tbpage-item" aria-label="Previous">
+                                                <span aria-hidden="true">«</span>
+                                            </a>
+                                        </li>
+
+                                        <!-- 迭代生成页码 -->
+                                        <li class="page-item active">
+                                            <a class="page-link tbpage-item" href="javascript:void(0);" >
+                                                <span class="whichPageNum">1</span>
+                                            </a>
+                                        </li>
+
+                                        <!-- 下一页 -->
+                                        <li class="page-item">
+                                            <a href="javascript:nextPage(this);" class="page-link tbpage-item" aria-label="Next">
+                                                <span aria-hidden="true">»</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Single select boxes</span>
+                            </td>
+                            <td>
+                                <select class="js-example-basic-single" name="state" style="width: 100%">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Multi-select boxes (pillbox)</span>
+                            </td>
+                            <td>
+                                <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>data- *属性</span>
+                            </td>
+                            <td>
+                                <select class="js-example-basic-single" data--placeholder="Select a state">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>嵌套（子键）选项</span>
+                            </td>
+                            <td>
+                                <select class="js-example-basic-single" data--placeholder="Select a state">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Disabling a Select2 control</span>
+                            </td>
+                            <td>
+                                <select class="js-example-disabled" data--placeholder="Select a state" style="width: 100%;">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                                <select class="js-example-disabled-multi" name="states[]" multiple="multiple" style="width: 100%">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                                <div class="js-programmatic-disable btn btn-md">禁用</div>
+                                <div class="js-programmatic-enable btn btn-md">开启</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Labels</span>
+                            </td>
+                            <td>
+                                <label for="id_label_single" style="width: 100%">
+                                    highlight the single select element
+                                    <select class="js-example-basic-single js-states form-control" id="id_label_single" style="width: 100%">
+                                        <option value="AL">Alabama</option>
+                                        ...
+                                        <option value="WY">Wyoming</option>
+                                    </select>
+                                </label>
+                                <label for="id_label_multiple" style="width: 100%">
+                                    highlight the multiple select element
+                                    <select class="js-example-basic-multiple js-states form-control" id="id_label_multiple" multiple="multiple" style="width: 100%;">
+                                        <option value="AL">Alabama</option>
+                                        ...
+                                        <option value="WY">Wyoming</option>
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Container width:relative</span>
+                            </td>
+                            <!--Value	Description
+                            'element'	Uses the computed element width from any applicable CSS rules.
+                            'style' 	Width is determined from the select element's style attribute. If no style attribute is found, null is returned as the width.
+                            'resolve'	Uses the style attribute value if available, falling back to the computed element width as necessary.
+                            '<value>'	Valid CSS values can be passed as a string (e.g. width: '80%').-->
+                            <td>
+                                <select class="js-example-responsive" style="width: 50%">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                                <select class="js-example-responsive" multiple="multiple" style="width: 75%">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>theme</span>
+                            </td>
+                            <!--Value	Description
+                            'element'	Uses the computed element width from any applicable CSS rules.
+                            'style' 	Width is determined from the select element's style attribute. If no style attribute is found, null is returned as the width.
+                            'resolve'	Uses the style attribute value if available, falling back to the computed element width as necessary.
+                            '<value>'	Valid CSS values can be passed as a string (e.g. width: '80%').-->
+                            <td>
+                                <select class="js-example-theme-single-themes" style="width: 100%" >
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                                <select class="js-example-theme-multiple-themes" multiple="multiple" style="width: 100%">
+                                    <option value="AL">Alabama</option>
+                                    ...
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Dropdown option groups</span>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Disabling options</span>
+                            </td>
+                            <td>
+                                <select class="js-example-disabled-results" style="width: 100%">
+                                    <option value="one">First</option>
+                                    <option value="two" disabled="disabled">Second (disabled)</option>
+                                    <option value="three">Third</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>data format-local</span>
+                            </td>
+                            <td>
+                                <select class="js-example-format" style="width: 100%">
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>data format-remote-ajax</span>
+                            </td>
+                            <td>
+                                <select class="js-example-data-ajax" style="width: 100%"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Generating id/text properties</span>
+                            </td>
+                            <td class="d-none">
+                                <select class="js-example-id-text" style="width: 100%">
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Grouped data</span>
+                            </td>
+                            <td>
+                                <select class="js-example-Grouped-data" style="width: 100%">
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Dropdown Templating</span>
+                            </td>
+                            <td>
+                                <select class="js-example-templateResult-templateSelection" style="width: 100%">
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Limiting the number of selections</span>
+                            </td>
+                            <td>
+                                <select class="js-example-limitNumber" style="width: 100%" multiple="multiple">
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Clearable selections</span>
+                            </td>
+                            <td>
+                                <select class="js-example-clearable" style="width: 100%" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Dynamic option creation single</span>
+                            </td>
+                            <td>
+                                <select class="js-example-Dynamic-option-creation-single" style="width: 100%" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Dynamic option creation multiple</span>
+                            </td>
+                            <td>
+                                <select class="js-example-Dynamic-option-creation-multiple" style="width: 100%" multiple="multiple" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Automatic tokenization into tags</span>
+                            </td>
+                            <td>
+                                <select class="js-example-tokenizer" style="width: 100%" multiple="multiple" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Customizing tag creation</span>
+                            </td>
+                            <td>
+                                <select class="js-example-customizing-tag" style="width: 100%" multiple="multiple" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Constraining tag creation</span>
+                            </td>
+                            <td>
+                                <select class="js-example-constraining-tag" style="width: 100%" multiple="multiple" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Customizing tag placement in the dropdown</span>
+                            </td>
+                            <td>
+                                <select class="js-example-dropdown-tag" style="width: 100%" multiple="multiple" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Single select placeholders</span>
+                            </td>
+                            <td>
+                                <select class="js-example-placeholder-single js-states form-control" style="width: 100%" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Customizing placeholder appearance</span>
+                            </td>
+                            <td>
+                                <select class="js-example-placeholder-appearance js-states form-control" style="width: 100%" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Matching grouped options</span>
+                            </td>
+                            <td>
+                                <select class="js-example-matching js-states form-control" style="width: 100%" >
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Minimum/Maximum search term length</span>
+                            </td>
+                            <td>
+                                <select class="js-example-min-max js-states form-control" style="width: 100%" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span style="font-weight: bold">Add, select, or clear items</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Creating new options in the dropdown</span>
+                            </td>
+                            <td>
+                                <select class="js-example-creating-new-options js-states form-control" style="width: 100%" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Create if not exists</span>
+                            </td>
+                            <td>
+                                <select class="js-example-creating-if-no js-states form-control" style="width: 100%" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4" id="4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Selecting options single 3</span>
+                            </td>
+                            <td>
+                                <select class="js-example-selecting-single js-states form-control" style="width: 100%" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Selecting options multiple 34</span>
+                            </td>
+                            <td>
+                                <select class="js-example-selecting-multiple js-states form-control" style="width: 100%" multiple="multiple" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4">four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Clearing selections</span>
+                            </td>
+                            <td>
+                                <select class="js-example-selecting-clearing-basic js-states form-control" style="width: 48%" multiple="multiple" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4" selected="selected" >four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                                <select class="js-example-selecting-clearing-change js-states form-control" style="width: 48%" multiple="multiple" >
+                                    <option value="totoro1">First</option>
+                                    <option value="totoro2" disabled="disabled">Second (disabled)</option>
+                                    <option value="totoro3">Third</option>
+                                    <option value="totoro4" selected="selected" >four</option>
+                                    <option value="totoro5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span style="font-weight: bold">Methods</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Methods-single</span>
+                            </td>
+                            <td>
+                                <div class="btn btn-md js-programmatic-set">set</div>
+                                <div class="btn btn-md js-programmatic-open">open</div>
+                                <div class="btn btn-md js-programmatic-close">close</div>
+                                <div class="btn btn-md js-programmatic-destroy">destroy</div>
+                                <div class="btn btn-md js-programmatic-init">init</div>
+                                <select class="js-example-programmatic js-states form-control" style="width: 100%" >
+                                    <option value="1">First</option>
+                                    <option value="2" disabled="disabled">Second (disabled)</option>
+                                    <option value="3">Third</option>
+                                    <option value="4">four-open</option>
+                                    <option value="5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Methods-multiple</span>
+                            </td>
+                            <td>
+                                <div class="btn btn-md js-programmatic-multi-set">set</div>
+                                <div class="btn btn-md js-programmatic-multi-clear">clear</div>
+                                <select class="js-example-programmatic-multi js-states form-control" style="width: 100%" multiple="multiple">
+                                    <option value="1">First</option>
+                                    <option value="2">Second</option>
+                                    <option value="3">Third</option>
+                                    <option value="4">four</option>
+                                    <option value="5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Checking if the plugin is initialized</span>
+                            </td>
+                            <td>
+                                <select class="js-example-checking js-states form-control" style="width: 100%" multiple="multiple">
+                                    <option value="1">First</option>
+                                    <option value="2">Second</option>
+                                    <option value="3">Third</option>
+                                    <option value="4">four</option>
+                                    <option value="5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Destroying the Select2 control</span>
+                            </td>
+                            <td>
+                                <select class="js-example-destroying js-states form-control" style="width: 100%">
+                                    <option value="1">First</option>
+                                    <option value="2">Second</option>
+                                    <option value="3">Third</option>
+                                    <option value="4">four</option>
+                                    <option value="5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span style="font-weight: bold">Events</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>js-example-events</span>
+                            </td>
+                            <td>
+                                <select class="js-example-events js-states form-control" style="width: 100%">
+                                    <option value="1">First</option>
+                                    <option value="2">Second</option>
+                                    <option value="3">Third</option>
+                                    <option value="4">four</option>
+                                    <option value="5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>js-event-log</span>
+                            </td>
+                            <td>
+                                <ol class="js-event-log" style="background-color: #2aabd2;width: 100%">
+                                    <li>Event Log</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>RTL support(dir:rtl)</span>
+                            </td>
+                            <td>
+                                <select class="js-example-rtl js-states form-control" style="width: 100%">
+                                    <option value="1">First</option>
+                                    <option value="2">Second</option>
+                                    <option value="3">Third</option>
+                                    <option value="4">four</option>
+                                    <option value="5">five</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span style="font-weight: bold">Advanced Features and Developer Guide</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footerOnly :: footer}">...</div>
+
+<script th:inline="javascript",type="text/javascript" >
+    /**RTL support：文本右飘*/
+    $(".js-example-rtl").select2({
+        placeholder:"文本右飘",
+        dir: "rtl"
+    })
+
+    /**Listening for events：监听被选中事件*/
+    var $eventLog = $(".js-event-log");
+    var $eventSelect = $(".js-example-events");
+
+    $eventSelect.select2();
+
+    $eventSelect.on("select2:open", function (e) { log("select2:open", e); });
+    $eventSelect.on("select2:close", function (e) { log("select2:close", e); });
+    $eventSelect.on("select2:select", function (e) { log("select2:select", e); });
+    $eventSelect.on("select2:unselect", function (e) { log("select2:unselect", e); });
+
+    $eventSelect.on("change", function (e) { log("change"); });
+
+    function log (name, evt) {
+        if (!evt) {
+            var args = "{}";
+        } else {
+            var args = JSON.stringify(evt.params, function (key, value) {
+                if (value && value.nodeName) return "[DOM node]";
+                if (value instanceof $.Event) return "[$.Event]";
+                return value;
+            });
+        }
+        var $e = $("<li>" + name + " -> " + args + "</li>");
+        $eventLog.append($e);
+        $e.animate({ opacity: 1 }, 10000, 'linear', function () {
+            $e.animate({ opacity: 0 }, 2000, 'linear', function () {
+                $e.remove();
+            });
+        });
+    }
+
+    /**Opening the dropdown：打回原型*/
+    $(".js-example-destroying").select2({}); //赋值select2样式
+    $(".js-example-destroying").data('select2').destroy();//销毁select2样式
+
+    /**methods open/close/destroy/init：选中、开、关、销毁、初始化下拉列表*/
+    var $selectSingle = $(".js-example-programmatic").select2();
+    var $selectMuti = $(".js-example-programmatic-multi").select2();
+    //选中4
+    $(".js-programmatic-set").on('click',function(){
+        $selectSingle.val("4").trigger("change");
+    })
+    //open 下拉框
+    $(".js-programmatic-open").on('click',function(){
+        $selectSingle.select2("open")
+    })
+    //close 下拉框
+    $(".js-programmatic-close").on('click',function(){
+        $selectSingle.select2("close")
+    })
+    //destroy 下拉框
+    $(".js-programmatic-destroy").on('click',function(){
+        $selectSingle.select2("destroy")
+    })
+    //init 下拉框
+    $(".js-programmatic-init").on('click',function(){
+        $selectSingle.select2()
+    })
+    //默认多选 选中
+    $(".js-programmatic-multi-set").on("click",function(){
+        $selectMuti.select2().val(['3','4']).trigger("change")
+    })
+    //清空 多选
+    $(".js-programmatic-multi-clear").on("click",function(){
+        $selectMuti.select2().val(null).trigger("change")
+    })
+
+
+
+    /**Checking if the plugin is initialized：检测是否存在该类*/
+    if ($('.js-example-checking').select2({}).hasClass("select2-hidden-accessible")) {
+        toastr.info("Checking if the plugin is initialized:true")
+    }else {
+        toastr.info("Checking if the plugin is initialized:false")
+    }
+
+
+    /**Clearing selections：清除所选中*/
+    $(".js-example-selecting-clearing-basic").select2({})
+    $(".js-example-selecting-clearing-change").select2({})
+    $(".js-example-selecting-clearing-change").val(null).trigger("change") //清除
+
+    /**Selecting options：默认选中：单选*/
+    $(".js-example-selecting-single").val("totoro3");
+    $(".js-example-selecting-single").trigger("change"); //选中 所获取的值
+    $(".js-example-selecting-single").select2({})
+    /**Selecting options：默认选中：多选*/
+    var selectedTwo = ['totoro3','totoro4'];
+    $(".js-example-selecting-multiple").select2({})
+    $(".js-example-selecting-multiple").val(selectedTwo);
+    $(".js-example-selecting-multiple").trigger("change");
+
+    /**Create if not exists：往尾部添加option:修改为批量添加*/
+    var dataIfNo = [
+        {
+            id: "totoro4",   //已经存在，不添加
+            text: 'icegone'
+        },{
+            id: "totoro7",  //未存在，添加
+            text: 'jackma(Create if not exists)'
+        }
+    ]
+    for(var i in dataIfNo){
+        // Set the value, creating a new option if necessary
+        if ($('.js-example-creating-if-no').find("option[value='" + dataIfNo[i].id + "']").length) {
+            $('.js-example-creating-if-no').val(dataIfNo[i].id).trigger('change');
+        } else {
+            // Create a DOM Option and pre-select by default            //默认选中
+            var newOption = new Option(dataIfNo[i].text, dataIfNo[i].id, true, true);
+            // Append it to the select
+            $('.js-example-creating-if-no').append(newOption).trigger('change');
+        }
+    }
+    $('.js-example-creating-if-no').select2({
+    })
+
+    /**Creating new options in the dropdown：往尾部添加option:修改为批量添加*/
+    var dataAppend = [
+        {
+            id: 6,
+            text: 'icegone'
+        },{
+            id: 7,
+            text: 'jackma'
+        }
+    ]
+    for(var i in dataAppend){  /**The third parameter of new Option(...) determines whether the item is "default selected"; i.e. it sets the selected attribute for the new option. The fourth parameter sets the options actual selected state - if set to true, the new option will be selected by default. */
+        var newOption = new Option(dataAppend[i].text, dataAppend[i].id, false, false);
+        $('.js-example-creating-new-options').append(newOption).trigger('change');
+    }
+    $('.js-example-creating-if-no').select2({
+    })
+
+    /**Minimum/Maximum search term length：限制最小最大输入长度*/
+    $(".js-example-min-max").select2({
+        placeholder:"输入长度为2-10之间",
+        minimumInputLength:2,
+        maximumInputLength:10
+    })
+    /**Matching grouped options：当术语出现在字符串的开头时，此示例才会匹配结果*/
+    function matchStart(params, data) {
+        // If there are no search terms, return all of the data
+        if ($.trim(params.term) === '') {
+            return data;
+        }
+        // Skip if there is no 'children' property
+        if (typeof data.children === 'undefined') {
+            return null;
+        }
+        // `data.children` contains the actual options that we are matching against
+        var filteredChildren = [];
+        $.each(data.children, function (idx, child) {
+            if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+                filteredChildren.push(child);
+            }
+        });
+        // If we matched any of the timezone group's children, then set the matched children on the group
+        // and return the group object
+        if (filteredChildren.length) {
+            var modifiedData = $.extend({}, data, true);
+            modifiedData.children = filteredChildren;
+
+            // You can return modified objects from here
+            // This includes matching the `children` how you want in nested data sets
+            return modifiedData;
+        }
+        // Return `null` if the term should not be displayed
+        return null;
+    }
+
+    var dataMatch = [
+        {
+            "text": "Group 1",
+            "children" : [
+                {
+                    "id": 1,
+                    "text": "Option 1.1"
+                },
+                {
+                    "id": 2,
+                    "text": "Option 1.2"
+                }
+            ]
+        },
+        {
+            "text": "Group 2",
+            "children" : [
+                {
+                    "id": 3,
+                    "text": "Option 2.1"
+                },
+                {
+                    "id": 4,
+                    "text": "Option 2.2"
+                }
+            ]
+        }
+    ];
+    $(".js-example-matching").select2({
+        data:dataMatch,
+        matcher: matchStart
+    });
+
+    /**Customizing placeholder appearance：自定义占位符外观*/
+    $('.js-example-placeholder-appearance').select2({
+        plccehonder:"未解决",
+        templateSelection: function (data) {
+            if (data.id === '') { // adjust for custom placeholder values
+                return '默认选择';
+            }
+            if (data.id === '1') { // adjust for custom placeholder values
+                return '选择id';
+            }
+            return data.text;
+        }
+    });
+
+    /**Single select placeholders：简单的文本placeholder*/
+    $(".js-example-placeholder-single").select2({
+        placeholder: "Select a state",
+        allowClear: true
+    });
+
+    /**Customizing tag placement in the dropdown：将添加的标签放进下拉框*/
+    $('.js-example-dropdown-tag').select2({
+        placeholder:"未解决",
+        insertTag: function (data, tag) {
+            // Insert the tag at the end of the results
+            data.push(tag);
+        }
+    });
+    /**Constraining tag creation：搜索后 若出现限制字符 如“@”，则不选中所选中的到 select中：*/
+    $('.js-example-constraining-tag').select2({
+        placeholder:"未解决",
+        createTag: function (params) {
+            // Don't offset to create a tag if there is no @ symbol
+            if (params.term.indexOf('@') === -1) {
+                // Return null to disable tag creation
+                return null;
+            }
+
+            return {
+                id: params.term,
+                text: params.term,
+                newTag: true // add additional parameters
+            }
+        }
+    });
+
+    /**Customizing tag creation：搜索后 空格键 选中所选中的到 select中*/
+    $('.js-example-customizing-tag').select2({
+        placeholder:"搜索后空格键选中所选中的到select中",
+        createTag: function (params) {
+            var term = $.trim(params.term);
+            if (term === '') {
+                return null;
+            }
+            return {
+                id: term,
+                text: term,
+                newTag: true // add additional parameters
+            }
+        }
+    });
+    /**Automatic tokenization into tags：自定义点击 键盘符号 添加到 select 中 相当于确定按钮*/
+    $(".js-example-tokenizer").select2({
+        placeholder:"自定义点击键盘符号添加到select中相当于确定按钮",
+        tags: true,
+        tokenSeparators: [',', ' ','/']
+    })
+
+    /**Dynamic option creation：可以自定义选项 即自己填入选项 多选*/
+    $(".js-example-Dynamic-option-creation-multiple").select2({
+        tags:true,
+    });
+
+    /**Dynamic option creation：可以自定义选项 即自己填入选项 单选*/
+    $(".js-example-Dynamic-option-creation-single").select2({
+        tags:true,
+    });
+    /**Limiting the number of selections：最多选两个*/
+    $(".js-example-clearable").select2({
+        placeholder: 'This is my placeholder',
+        allowClear: true
+    });
+
+    /**Limiting the number of selections：最多选两个*/
+    $(".js-example-limitNumber").select2({
+        maximumSelectionLength: 2
+    })
+
+
+    /**Automatic selection:Forcing the dropdown to remain open after selection*/
+    $('.js-example-automatic-selection').select2({
+        selectOnClose: true, //选择后下拉列表保持打开
+        placeholder:"Forcing the dropdown to remain open after selection"
+    });
+
+
+    /**Dropdown Templating*/
+    function formatState (state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "http://182.254.186.173:8888/images/";
+        var $state = $(
+            '<span><img src="' + baseUrl + state.element.value.toLowerCase() + '.gif" class="img-flag" style="width: 24px;height: 24px;margin-top: -3px" /> ' + state.text + '</span>'
+        );
+        return $state;
+    };
+    //添加图片  二者选一，两者同在 后者覆盖前者
+    $(".js-example-templateResult-templateSelection").select2({
+        templateResult: formatState, //只显示result text
+        templateSelection: formatState //显示 所选择的 包括图片
+
+    });
+
+    /**Grouped data*/
+    var dataGrouped = [
+        {
+            "text": "Group 1",
+            "children" : [
+                {
+                    "id": 1,
+                    "text": "Option 1.1"
+                },
+                {
+                    "id": 2,
+                    "text": "Option 1.2"
+                }
+            ]
+        },
+        {
+            "text": "Group 2",
+            "children" : [
+                {
+                    "id": 3,
+                    "text": "Option 2.1"
+                },
+                {
+                    "id": 4,
+                    "text": "Option 2.2"
+                }
+            ]
+        }
+    ];
+    var paginationData = {
+        "more": true
+    }
+    $(".js-example-Grouped-data").select2({
+        data:dataGrouped,
+        pagination: paginationData,
+        allowclear:true,
+        placeholder:"分组显示",
+    })
+
+    /**Generating id/text properties*/
+    var dataGenerating =[
+        {
+            //no id
+            "idText": "1",
+            //no text
+            "textId": "Basic Optipn"
+        },
+        {
+            "idText": "1",
+            "textId": "Selected Option",
+            "selected": true
+        },
+        {
+            "idText": "1",
+            "textId": "disabled Option",
+            "disabled": true
+        },
+        {
+            "idText": "1",
+            "textId": "Basic Optipn",
+        }
+    ];
+    //将 非 id 非text 映射处理为id text
+    var dataGeneratingFinal = $.map(dataGenerating, function (obj) {
+        obj.id = obj.id || obj.pk; // replace pk with your identifier
+        return obj;
+    });
+    var dataGeneratingFinal = $.map(dataGeneratingFinal, function (obj) {
+        obj.text = obj.text || obj.name; // replace name with the property used for the text
+        return obj;
+    });
+    $(".js-example-id-text").select2({
+        data:dataGeneratingFinal,
+        allowclear:true,
+        placeholder:"替换非id和text为正确模式：id为string",
+    })
+
+    /**start data format:加载远程数据:json格式*/
+    $(".js-example-data-ajax").select2({
+        ajax: {
+            url: "https://api.github.com/search/repositories",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term, // search term
+                    page: params.page
+                };
+            },
+            processResults: function (data, params) {
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1;
+
+                return {
+                    results: data.items,
+                    pagination: {
+                        more: (params.page * 30) < data.total_count
+                    }
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Search for a repository',
+        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        minimumInputLength: 1,
+        templateResult: formatRepo,
+        templateSelection: formatRepoSelection
+    });
+
+    function formatRepo (repo) {
+        if (repo.loading) {
+            return repo.text;
+        }
+
+        var markup = "<div class='select2-result-repository clearfix'>" +
+            "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
+            "<div class='select2-result-repository__meta'>" +
+            "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+
+        if (repo.description) {
+            markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
+        }
+
+        markup += "<div class='select2-result-repository__statistics'>" +
+            "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> " + repo.forks_count + " Forks</div>" +
+            "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
+            "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
+            "</div>" +
+            "</div></div>";
+
+        return markup;
+    }
+
+    function formatRepoSelection (repo) {
+        return repo.full_name || repo.text;
+    }
+    /**edn data format:加载远程数据:json格式*/
+
+    /**data format:加载本地数据:json格式*/
+    var dataLocal =[
+        {
+            "id": 1,
+            "text": "Basic Optipn"
+        },
+        {
+            "id": 2,
+            "text": "Selected Option",
+            "selected": true
+        },
+        {
+            "id": 3,
+            "text": "disabled Option",
+            "disabled": true
+        },
+        {
+            "id": 4,
+            "text": "Basic Optipn",
+        }
+    ];
+    $(".js-example-format").select2({
+        data:dataLocal,
+        allowclear:true,
+        placeholder:"加载本地数据",
+        theme:"classic"
+    })
+
+    /**Disabling options*/
+    var $disabledResults = $(".js-example-disabled-results");
+    $disabledResults.select2();
+
+    /**themes*/
+    $(".js-example-theme-single-themes").select2({
+        theme: "classic"
+    });
+
+    $(".js-example-theme-multiple-themes").select2({
+        theme: "classic"
+    });
+
+    /**Container width:relative||element||style||resolve*/
+    $(".js-example-responsive").select2({
+        width: 'resolve' // need to override the changed default
+    });
+
+    /**Disabling a Select2 control*/
+    $(".js-example-disabled").select2();
+    $(".js-example-disabled-multi").select2();
+
+    $(".js-programmatic-enable").on("click", function () {
+        $(".js-example-disabled").prop("disabled", false);
+        $(".js-example-disabled-multi").prop("disabled", false);
+    });
+
+    $(".js-programmatic-disable").on("click", function () {
+        $(".js-example-disabled").prop("disabled", true);
+        $(".js-example-disabled-multi").prop("disabled", true);
+    });
+
+    $(function(){
+        /**Single select boxes*/
+        $('.js-example-basic-single').select2({
+            placeholder: 'Select',
+            width:"100%",
+        });
+
+        /**Multi-select boxes (pillbox)*/
+        $('.js-example-basic-multiple').select2({
+            placeholder: 'Select',
+            width:"100%",
+            minimumInputLength:0,
+            debug:true
+        });
+
+    });
+
+    var contextPath =[[@{/}]];
+    /**
+     * ajax获取select2下拉框数据（带鼠标滚动分页）
+     * @param selectId 下拉框id
+     * @param options 选项，包含如下字段：
+     * url 数据接口url
+     * pageSize 每次加载的数据条数
+     * name 下拉框显示字段名称
+     * value 下拉框value字段名称
+     * placeholder 默认显示的文字
+     * selected 默认选中项，格式：[{id:1,text:"选项1"},{id:2,text:"选项2"}]
+     * formatResult 返回结果回调函数，可以在该回调中，自定义下拉框数据的显示样式，比如：加入图片等
+     * templateSelection 选中项回调，该参数必须与formatResult参数搭配使用
+     * 注意点1 : 后端接口需返回 data（具体数据）和 total（总页数）两个字段
+     * 注意点2 : 两个自定义的回调函数中，必须要把处理结果return回来，如果没有传入formatResult参数，则采用默认的显示样式
+     */
+
+    //数据 数量
+    var totalNum;
+    //第几页：初始1
+    var whichPage= 1;
+    //每页 展示的数据数量：初始10
+    var pageSize = 10;
+    // 数据 总页数
+    var totalPages;
+    //添加 分页框 标志
+    var isbool = 0;
+
+    function ajaxSelect2 (selectId,options,formatResult,formatSelected) {
+        //去掉 分页框 不用 查看api之后发现可以使用pagination 实现
+        // removeChild();
+        var value = options["value"];
+        var name = options["name"];
+        var flag = (typeof formatResult === "function") ? true : false;
+        var select2Option = {
+            language: "zh-CN",
+            theme: "classic",
+            allowClear: true,
+            placeholder: options["placeholder"] || "请选择",
+            ajax:{
+                url: options["url"],
+                dataType: "json",
+                delay: 250,
+                data: function(params){
+                    // 传递到后端的参数
+                    return {
+                        // 搜索框内输入的内容
+                        selectInput: params.term,
+                        // 当前页
+                        curPage: params.page || whichPage,
+                        // 每页显示多少条记录，默认10条
+                        pageSize: options["pageSize"] || pageSize
+                    };
+                },
+                cache:false,
+                processResults: function (res, params) {
+                    params.page = params.page || whichPage;
+                    var cbData = [];
+                    if (flag) {
+                        cbData = res.data;
+                    } else {
+                        var data = res.data.content;
+                        var len = data.length;
+                        totalNum= res.data.totalElements; //获取数据数量
+                        $(".totalNum").text(totalNum);    //刷新值
+                        totalPages= res.data.totalPages; //获取数据总页数：仅用于判断 是否能继续上下翻页
+                        for(var i= 0; i<len; i++){
+                            // toastr.info(data[i].name);
+                            var option = {"id": data[i][value], "text": data[i].name};
+                            cbData.push(option);
+                        }
+                        //添加分页 框 :不用 查看api之后发现可以使用pagination 实现
+                        //appendChild();
+                    }
+                    toastr.info("cbData:"+cbData);
+                    return {
+                        results: cbData,
+                        pagination: { //继续分页
+                            more: params.page < res.data.totalPages
+                        }
+                    };
+                }
+            },
+            escapeMarkup: function (markup) {
+                // 字符转义处理
+                return markup;
+            },
+            // 最少输入N个字符才开始检索，如果想在点击下拉框时加载数据，请设置为 0
+            minimumInputLength: 0
+        };
+        if (flag) {
+            select2Option.templateResult = formatResult;
+            select2Option.templateSelection = formatSelected;
+        }
+        var $select =  $("#"+selectId);
+        $select.select2(select2Option);
+        if (!flag) {
+            // 默认选中项设置
+            var html = '';
+            var values = [];
+            var selected = options['selected'];
+            if (selected) {
+                $.each(selected,function (index,item) {
+                    values.push(item.id);
+                    html += '<option value="'+item.id+'">'+item.text+'</option>';
+                    toastr.warning("html::"+html);
+                });
+                $select.append(html);
+                $select.val(values).trigger('change');
+            }
+        }
+        toastr.info("whichPage::"+whichPage+
+        "<br>totalPages::"+totalPages
+        );
+    }
+
+    var options = {
+        url: contextPath+"works/hangxin/selectTest",      // 数据接口url
+        pageSize: pageSize, // 每次加载的数据条数
+        value: "id",  // 下拉框value字段名称
+        name: "name", // 下拉框显示字段名称
+        placeholder:"Search Me",
+        selected: []  // 默认选中项，格式：[{id:1,text:"选项1"},{id:2,text:"选项2"}]
+    };
+    ajaxSelect2("selectTest",options);
+    /**服务器端传输的数据格式：“{'result':[{'id':'4048','text':'4808','name':'CHINA169-BJ'},{'id':'4048','text':'4808','name':'CHINA169-BJ'}],'total':'1'}”
+     注：返回的数据格式是json格式的，result存放的是符合查询条件的记录前n条数据的一些属性，total存放的是符合查询条件的记录的总数*/
+
+    /**添加分页 选择查询*/
+    /*function appendChildThis(){
+        var parent = $(".select2-results").attr("class");
+        toastr.info("class:"+parent);
+        toastr.info("value:"+$("#selectTest").text());
+        if(parent!="underfine"){
+
+            $(".select2-results").append($("#child"));
+            /!*
+                       $("#child").show();
+            *!/
+        }
+    }*/
+
+    /**刷新页面大小*/
+    function pageSizeChange(obj){
+        //获取要展示的 页面大小
+        var pagesizeRefresh =$(".custom-select option:selected").text();
+        // toastr.info("select:"+pagesizeRefresh);
+        //刷新 页面大小
+        options.pageSize=pagesizeRefresh;
+        //重新加载
+        ajaxSelect2("selectTest",options);
+    }
+
+    /**上一页*/
+    function prePage(obj){
+        //判断大于2才能减少
+        if(whichPage>=2){
+            $(".whichPageNum").text(--whichPage);
+            //重新加载
+            ajaxSelect2("selectTest",options);
+        }
+    }
+
+    /**下一页*/
+    function nextPage(obj){
+        //判断小于总页数才能增加
+        if(whichPage<totalPages){
+            $(".whichPageNum").text(++whichPage);
+            //重新加载
+            ajaxSelect2("selectTest",options);
+        }
+    }
+
+    /**添加append 分页框*/
+    function appendChild(){
+        var parent = $(".select2-results").attr("class");
+        toastr.warning("appending~~~~~~~~~~~~<br>class:"+parent+"<br>value:"+$("#selectTest").text());
+        if(parent!="underfine") {
+            $("#hideChildPage").show();
+            $(".select2-results").append($("#childPage"));
+        }
+    }
+
+    /**去掉remove 分页框*/
+    function removeChild(){
+        toastr.warning("removing~~~~~~~~~~~~~");
+        var parent = $(".select2-results").attr("class");
+        if(parent!="underfine") {
+            $("#hideChildPage").hide();
+            $(".select2-results").remove($("#childPage"));
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--章节内容：起步-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js 起步</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+</head>
+<body>
+<!-- /.container -->
+<div class="container">
+    <div class="row" id="vue_det"> <!--设定vm内el起作用的范围:div 外部不受影响-->
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="3" style="font-weight: bold">Vue.js 起步</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr >
+                            <td >name : {{name}}</td> <!--获取data值-->
+                            <td >url : {{url}}</td> <!--获取data值-->
+                            <td >method : {{details()}}</td> <!--获取方法内的返回值-->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="3" style="font-weight: bold">Vue.js 响应式数据:即只看最终值</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr >
+                            <td >name : {{name}}</td> <!--获取data值-->
+                            <td >url : {{url}}</td> <!--获取data值-->
+                            <td >method : {{details()}}</td> <!--获取方法内的返回值-->
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td colspan="3" style="font-weight: bold">Vue.js 使用前缀$，以便与用户定义的属性区分开来</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr >
+                        <td >vm.$data===data :{{vm.$data === data}}</td> <!--比较vm内data值与 vm外data值-->
+                        <td colspan="2">vm.$data.grade===data.grade :{{vm.$data.grade === data.grade}}</td> <!--比较vm内data值与 vm外data值-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script type="text/javascript">
+    var vm =new Vue({
+        el:'#vue_det', //改动全部在以上指定的 div 内，div 外部不受影响。
+        data:{         //vm内定义属性：使用时使用 vm.$data
+            name:'去冰',
+            url:'www.baidu.cn',
+            grade:'upgrade'
+        },
+        methods:{       //定义函数，可以通过 return 来返回函数值
+            details:function(){
+                return this.name + "学技术，记录学习点滴！";
+            }
+        }
+    })
+    //设置属性会影响到原始数据
+    vm.url ="www.icegone.com"
+
+    var data ={         //用户自定义属性
+        name:'marry',
+        url:'www.marry.cn',
+        grade:'upgrade'
+    };
+
+</script>
+</body>
+</html>

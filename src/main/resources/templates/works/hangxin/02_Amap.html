@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<!--章节内容：条件语句-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <script src="http://webapi.amap.com/maps?v=1.4.11&key=ffac55383afc09689000e41c672c3e68&plugin=AMap.ToolBar,AMap.Driving"></script></head>
+    <title>select2</title>
+    <style>
+        #container {
+            width:100%;
+            height: 320px;
+        }
+        img{
+            width: 43px;
+            height: 43px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_1()">入门</div>
+                        </td>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_2()">图层</div>
+                        </td>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_3()">点标记与矢量图形
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_4()">事件功能与信息窗体(点击)
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_5()">点标记-折线
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_6()">同步加载多个插件
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_7()">创建多个地图
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_8()">设置/获取地图中心点和级别
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_9()">缩放:缩
+                            </div>
+                            <div class="btn btn-md" onclick="amap_10()" >放
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_11()">自适应蓝色标记
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_12()">自适应所有标记
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn btn-md" onclick="amap_13()">M/C:add
+                            </div>
+                            <div class="btn btn-md" onclick="amap_14()" >delete
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div id="container"></div>
+                        </td>
+                    </tr>
+                    <tr class="hideme">
+                        <td >
+                            <div id="containerOne" style="width:90%; height:320px"></div>
+                        </td>
+                        <td >
+                            <div id="containerTwo" style="width:90%; height:320px"></div>
+                        </td>
+                        <td >
+                            <div id="containerThree" style="width:90%; height:320px"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" >
+
+    /**marker：添加*/
+    var map__;
+    var marker__;
+    var circle__;
+    function amap_13(){
+        // 构造点标记
+        var map__ = new AMap.Map('container', {
+            resizeEnable: true,
+            zoom:11,
+            center: [116.405467, 39.907761]
+        });
+        // 构造点标记
+        marker__ = new AMap.Marker({
+            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+            position: [116.405467, 39.907761]
+        });
+
+        // 构造矢量圆形
+        circle__ = new AMap.Circle({
+            center: new AMap.LngLat("116.405467", "39.907761"), // 圆心位置
+            radius: 4000,  //半径
+            strokeColor: "gold",  //线颜色
+            strokeOpacity: 1,  //线透明度
+            strokeWeight: 3,  //线粗细度
+            fillColor: "#fef",  //填充颜色
+            fillOpacity: 0.5 //填充透明度:越低越透明
+        });
+
+        // 将以上覆盖物添加到地图上
+        // 单独将点标记添加到地图上
+        // map.add(marker);
+        // add方法可以传入一个覆盖物数组，将点标记和矢量圆同时添加到地图上
+        map__.add(marker__);
+        map__.add(circle__);
+    }
+    /**marker：删除*/
+    function amap_14(){
+            map__.remove(marker__);
+            map__.remove(circle__);
+            toastr.info("remove::[marker,circle]")
+    }
+    /** 自适应标记：蓝色*/
+    function amap_11(){
+        map_= new AMap.Map('container', {
+            resizeEnable: true,
+            center: [111.279115, 23.476962],//中心点坐标
+            zoom: mapZoom
+        });
+        // 创建四个点标记
+        var m1 = new AMap.Marker({
+            position: [116.49, 37.4]
+        });
+        var m2 = new AMap.Marker({
+            position: [116.29, 37.5]
+        });
+        var m3 = new AMap.Marker({
+            position: [116.69, 37.6],
+            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png"
+        });
+
+        var m4 = new AMap.Marker({
+            position: [116.89, 37.9]
+        });
+        map_.add(m1);
+        map_.add(m2);
+        map_.add(m3);
+        map_.add(m4);
+        /*自适应 蓝色标志*/
+        map_.setFitView([m1, m2]);
+    }
+    /** 自适应标记：所有*/
+    function amap_12(){
+        map_= new AMap.Map('container', {
+            resizeEnable: true,
+            center: [111.279115, 23.476962],//中心点坐标
+            zoom: mapZoom
+        });
+        // 创建四个点标记
+        var m1 = new AMap.Marker({
+            position: [116.49, 37.4]
+        });
+        var m2 = new AMap.Marker({
+            position: [116.29, 37.5]
+        });
+        var m3 = new AMap.Marker({
+            position: [116.69, 37.6],
+            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png"
+        });
+
+        var m4 = new AMap.Marker({
+            position: [116.89, 37.9]
+        });
+        map_.add(m1);
+        map_.add(m2);
+        map_.add(m3);
+        map_.add(m4);
+        /*自适应 蓝色标志*/
+        map_.setFitView([m1, m2,m3,m4]);
+    }
+    /** 设置缩放级别:缩*/
+    var map_;
+    var mapZoom=13;
+    function amap_9(){
+        map_= new AMap.Map('container', {
+            resizeEnable: true,
+            center: [111.279115, 23.476962],//中心点坐标
+            zoom: mapZoom
+        });
+        // 设置地图级别，级别为数字。
+        // PC上，参数zoom可设范围：[3,18]；
+        // 移动端：参数zoom可设范围：[3,19]
+        map_.setZoom(--mapZoom);
+        // 获取地图级别
+        var currentZoom = map_.getZoom();
+        toastr.info("currentZoom::"+currentZoom)
+    }
+    /** 设置缩放级别:放*/
+    function amap_10(){
+        map_= new AMap.Map('container', {
+            resizeEnable: true,
+            center: [111.279115, 23.476962],//中心点坐标
+            zoom: mapZoom
+        });
+        // 设置地图级别，级别为数字。
+        // PC上，参数zoom可设范围：[3,18]；
+        // 移动端：参数zoom可设范围：[3,19]
+        map_.setZoom(++mapZoom);
+        // 获取地图级别
+        var currentZoom = map_.getZoom();
+        toastr.info("currentZoom::"+currentZoom)
+    }
+
+    /** 设置/获取地图中心点和级别*/
+    function amap_8(){
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            position: [116.481181, 39.989792],
+            zoom: 13
+        });
+        // 传入经纬度，设置地图中心点
+        var position = new AMap.LngLat(116, 23);  // 标准写法
+        // 简写 var position = [116, 39];
+        map.setCenter(position);
+        // 获取地图中心点
+        var currentCenter = map.getCenter();
+        toastr.info("currentCenter:"+currentCenter)
+    }
+    /** 创建多个地图*/
+    function amap_7(){
+        // 创建多个地图对象
+        var mapOne = new AMap.Map('containerOne');
+        var mapTwo = new AMap.Map('containerTwo');
+        var mapThree = new AMap.Map('containerThree');
+        mapOne.on('complete', function(){
+            toastr.info("complete:mapOne")
+        });
+        mapTwo.on('complete', function(){
+            toastr.info("complete:mapTwo")
+        });
+        mapThree.on('complete', function(){
+            toastr.info("complete:mapThree")
+        });
+
+        setTimeout(function comDes(){
+            // 3秒后销毁地图，并清空地图容器
+            mapOne.destroy( );
+            mapTwo.destroy( );
+            mapThree.destroy( );
+            $(".hideme").hide();
+        },3000)
+    }
+    /** 同步加载多个插件*/
+    function amap_6(){
+        var map = new AMap.Map('container',{
+            resizeEnable: true,
+            zoom:12,
+            center:[116.39,39.9]
+        });
+        var toolbar = new AMap.ToolBar();
+        map.plugin(toolbar);
+        var driving = new AMap.Driving();
+        driving.search(/*参数*/)
+    }
+    /** 点标记与矢量图形*/
+    function amap_5(){
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            position: [116.481181, 39.989792],
+            zoom: 13
+        });
+        var lineArr = [
+            [116.368904, 39.913423],
+            [116.382122, 39.901176],
+            [116.387271, 39.912501],
+            [116.398258, 39.904600]
+        ];
+        var polyline = new AMap.Polyline({
+            path: lineArr,          //设置线覆盖物路径
+            strokeColor: "#3366FF", //线颜色
+            strokeWeight: 5,        //线宽
+            strokeStyle: "solid",   //线样式
+        });
+        map.add(polyline);
+    }
+
+    /**入门*/
+    function amap_1(){
+        var map = new AMap.Map('container', {
+            zoom:11,//级别
+            center: [111.279115, 23.476962],//中心点坐标
+            viewMode:'3D'//使用3D视图
+        });
+    }
+    /** 图层*/
+    function amap_2(){
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            center: [111.279115, 23.476962],//中心点坐标
+            zoom: 13
+        });
+        //实时路况图层
+        var trafficLayer = new AMap.TileLayer.Traffic({
+            zIndex: 10
+        });
+        map.add(trafficLayer);//添加图层到地图
+    }
+
+    /** 点标记与矢量图形*/
+    function amap_3(){
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            position: [116.481181, 39.989792],
+            zoom: 13
+        });
+        //实时路况图层
+        var trafficLayer = new AMap.TileLayer.Traffic({
+            zIndex: 10
+        });
+        map.add(trafficLayer);//添加图层到地图
+
+        var marker = new AMap.Marker({
+            position:[111.27,  23.4]//位置
+        })
+        map.add(marker);//添加到地图
+    }
+
+    /** 事件功能与信息窗体*/
+    function amap_4(){
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            center: [111.279115, 23.476962],//中心点坐标
+            zoom: 13
+        });
+        //实时路况图层
+        var trafficLayer = new AMap.TileLayer.Traffic({
+            zIndex: 10
+        });
+        map.add(trafficLayer);//添加图层到地图
+        var infoWindow = new AMap.InfoWindow({ //创建信息窗体
+            isCustom: true,  //使用自定义窗体
+            content:'<div style="color: red;background-color: #2aabd2">信息窗体</div>', //信息窗体的内容可以是任意html片段
+            offset: new AMap.Pixel(16, -45)
+        });
+        var onMarkerClick  =  function(e) {
+            infoWindow.open(map, e.target.getPosition());//打开信息窗体
+            //e.target就是被点击的Marker
+        }
+        var marker = new AMap.Marker({
+            center: [111.279115, 23.476962],
+        })
+        map.add(marker);
+        marker.on('click',onMarkerClick);//绑定click事件
+        $(".amap-icon").click();
+
+    }
+
+</script>
+</body>
+</html>
